@@ -1,5 +1,5 @@
 import React from "react";
-import { useColorScheme } from "react-native";
+import { useColorScheme, View } from "react-native";
 import Icon from "react-native-dynamic-vector-icons";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
@@ -12,13 +12,17 @@ import { SCREENS } from "@shared-constants";
 import { palette } from "@theme/themes";
 import { LightTheme, DarkTheme } from "@theme/themes";
 // ? Screens
-import HomeScreen from "@screens/home/HomeScreen";
-import SearchScreen from "@screens/search/SearchScreen";
-import DetailScreen from "@screens/detail/DetailScreen";
-import ProfileScreen from "@screens/profile/ProfileScreen";
-import NotificationScreen from "@screens/notification/NotificationScreen";
+import YoutubeScreen from "@screens/youtube/YoutubeScreen";
+import TwitchScreen from "@screens/twitch/TwitchScreen";
+import WebtoonScreen from "@screens/webtoon/WebtoonScreen";
+import CafeScreen from "@screens/cafe/CafeScreen";
+import StoreScreen from "@screens/store/StoreScreen";
+/**
+ * ? Shared Imports
+ */
+import Text from "@shared-components/text-wrapper/TextWrapper";
+import fonts from "@fonts";
 
-// ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -38,46 +42,70 @@ const Navigation = () => {
   ) => {
     let iconName: string = "home";
     switch (route.name) {
-      case SCREENS.HOME:
+      case SCREENS.YOUTUBE:
         iconName = focused ? "home" : "home-outline";
         break;
-      case SCREENS.SEARCH:
+      case SCREENS.TWITCH:
         iconName = focused ? "search" : "search-outline";
         break;
-      case SCREENS.NOTIFICATION:
+      case SCREENS.WEBTOON:
         iconName = focused ? "notifications" : "notifications-outline";
         break;
-      case SCREENS.PROFILE:
+      case SCREENS.CAFE:
         iconName = focused ? "person" : "person-outline";
         break;
-      default:
-        iconName = focused ? "home" : "home-outline";
+      case SCREENS.STORE:
+        iconName = focused ? "logo-youtube" : "logo-youtube";
         break;
     }
     return <Icon name={iconName} type="Ionicons" size={size} color={color} />;
+  };
+
+  const renderHeader = () => {
+    return (
+      <Text
+        fontFamily={fonts.tmon.black}
+        color={isDarkMode ? palette.white : palette.black}
+        h3
+      >
+        CHIMHA
+      </Text>
+    );
   };
 
   const renderTabNavigation = () => {
     return (
       <Tab.Navigator
         screenOptions={({ route }) => ({
-          headerShown: false,
+          headerShown: true,
+          headerTitle: () => renderHeader(),
+          headerStyle: {
+            backgroundColor: isDarkMode ? palette.black : palette.white,
+          },
           tabBarIcon: ({ focused, color, size }) =>
             renderTabIcon(route, focused, color, size),
+          tabBarShowLabel: false,
           tabBarActiveTintColor: palette.primary,
           tabBarInactiveTintColor: "gray",
           tabBarStyle: {
             backgroundColor: isDarkMode ? palette.black : palette.white,
+            borderTopWidth: 0,
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: -5,
+            },
+            shadowOpacity: 0.04,
+            shadowRadius: 6,
+            height: 90,
           },
         })}
       >
-        <Tab.Screen name={SCREENS.HOME} component={HomeScreen} />
-        <Tab.Screen name={SCREENS.SEARCH} component={SearchScreen} />
-        <Tab.Screen
-          name={SCREENS.NOTIFICATION}
-          component={NotificationScreen}
-        />
-        <Tab.Screen name={SCREENS.PROFILE} component={ProfileScreen} />
+        <Tab.Screen name={SCREENS.YOUTUBE} component={YoutubeScreen} />
+        <Tab.Screen name={SCREENS.TWITCH} component={TwitchScreen} />
+        <Tab.Screen name={SCREENS.WEBTOON} component={WebtoonScreen} />
+        <Tab.Screen name={SCREENS.CAFE} component={CafeScreen} />
+        <Tab.Screen name={SCREENS.STORE} component={StoreScreen} />
       </Tab.Navigator>
     );
   };
@@ -91,10 +119,7 @@ const Navigation = () => {
       theme={isDarkMode ? DarkTheme : LightTheme}
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name={SCREENS.HOME} component={renderTabNavigation} />
-        <Stack.Screen name={SCREENS.DETAIL}>
-          {(props) => <DetailScreen {...props} />}
-        </Stack.Screen>
+        <Stack.Screen name="Tabs" component={renderTabNavigation} />
       </Stack.Navigator>
     </NavigationContainer>
   );
