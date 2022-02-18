@@ -11,6 +11,14 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { SCREENS } from "@shared-constants";
 import { palette } from "@theme/themes";
 import { LightTheme, DarkTheme } from "@theme/themes";
+import {
+  WebtoonSvg,
+  FocusedWebtoonSvg,
+  CafeSvg,
+  FocusedCafeSvg,
+  StoreSvg,
+  FocusedStoreSvg,
+} from "@shared-components/svg/svg";
 // ? Screens
 import YoutubeScreen from "@screens/youtube/YoutubeScreen";
 import TwitchScreen from "@screens/twitch/TwitchScreen";
@@ -43,19 +51,33 @@ const Navigation = () => {
     let iconName: string = "home";
     switch (route.name) {
       case SCREENS.YOUTUBE:
-        iconName = focused ? "home" : "home-outline";
+        iconName = "logo-youtube";
+        color = focused ? "#EA4241" : "#333333";
         break;
       case SCREENS.TWITCH:
-        iconName = focused ? "search" : "search-outline";
+        iconName = "logo-twitch";
+        color = focused ? "#9D40E9" : "#333333";
         break;
       case SCREENS.WEBTOON:
-        iconName = focused ? "notifications" : "notifications-outline";
+        return focused ? (
+          <FocusedWebtoonSvg width={32} height={32} />
+        ) : (
+          <WebtoonSvg width={32} height={32} />
+        );
         break;
       case SCREENS.CAFE:
-        iconName = focused ? "person" : "person-outline";
+        return focused ? (
+          <FocusedCafeSvg width={32} height={32} />
+        ) : (
+          <CafeSvg width={32} height={32} />
+        );
         break;
       case SCREENS.STORE:
-        iconName = focused ? "logo-youtube" : "logo-youtube";
+        return focused ? (
+          <FocusedStoreSvg width={30} height={30} />
+        ) : (
+          <StoreSvg width={30} height={30} />
+        );
         break;
     }
     return <Icon name={iconName} type="Ionicons" size={size} color={color} />;
@@ -85,8 +107,7 @@ const Navigation = () => {
           tabBarIcon: ({ focused, color, size }) =>
             renderTabIcon(route, focused, color, size),
           tabBarShowLabel: false,
-          tabBarActiveTintColor: palette.primary,
-          tabBarInactiveTintColor: "gray",
+          tabBarInactiveTintColor: "#333333",
           tabBarStyle: {
             backgroundColor: isDarkMode ? palette.black : palette.white,
             borderTopWidth: 0,
