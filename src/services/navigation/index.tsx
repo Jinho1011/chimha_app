@@ -1,5 +1,5 @@
 import React from "react";
-import { useColorScheme } from "react-native";
+import { useColorScheme, View } from "react-native";
 import Icon from "react-native-dynamic-vector-icons";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
@@ -11,14 +11,26 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { SCREENS } from "@shared-constants";
 import { palette } from "@theme/themes";
 import { LightTheme, DarkTheme } from "@theme/themes";
+import {
+  WebtoonSvg,
+  FocusedWebtoonSvg,
+  CafeSvg,
+  FocusedCafeSvg,
+  StoreSvg,
+  FocusedStoreSvg,
+} from "@shared-components/svg/svg";
 // ? Screens
-import HomeScreen from "@screens/home/HomeScreen";
-import SearchScreen from "@screens/search/SearchScreen";
-import DetailScreen from "@screens/detail/DetailScreen";
-import ProfileScreen from "@screens/profile/ProfileScreen";
-import NotificationScreen from "@screens/notification/NotificationScreen";
+import YoutubeScreen from "@screens/youtube/YoutubeScreen";
+import TwitchScreen from "@screens/twitch/TwitchScreen";
+import WebtoonScreen from "@screens/webtoon/WebtoonScreen";
+import CafeScreen from "@screens/cafe/CafeScreen";
+import StoreScreen from "@screens/store/StoreScreen";
+/**
+ * ? Shared Imports
+ */
+import Text from "@shared-components/text-wrapper/TextWrapper";
+import fonts from "@fonts";
 
-// ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -38,46 +50,83 @@ const Navigation = () => {
   ) => {
     let iconName: string = "home";
     switch (route.name) {
-      case SCREENS.HOME:
-        iconName = focused ? "home" : "home-outline";
+      case SCREENS.YOUTUBE:
+        iconName = "logo-youtube";
+        color = focused ? "#EA4241" : "#333333";
         break;
-      case SCREENS.SEARCH:
-        iconName = focused ? "search" : "search-outline";
+      case SCREENS.TWITCH:
+        iconName = "logo-twitch";
+        color = focused ? "#9D40E9" : "#333333";
         break;
-      case SCREENS.NOTIFICATION:
-        iconName = focused ? "notifications" : "notifications-outline";
+      case SCREENS.WEBTOON:
+        return focused ? (
+          <FocusedWebtoonSvg width={32} height={32} />
+        ) : (
+          <WebtoonSvg width={32} height={32} />
+        );
         break;
-      case SCREENS.PROFILE:
-        iconName = focused ? "person" : "person-outline";
+      case SCREENS.CAFE:
+        return focused ? (
+          <FocusedCafeSvg width={32} height={32} />
+        ) : (
+          <CafeSvg width={32} height={32} />
+        );
         break;
-      default:
-        iconName = focused ? "home" : "home-outline";
+      case SCREENS.STORE:
+        return focused ? (
+          <FocusedStoreSvg width={30} height={30} />
+        ) : (
+          <StoreSvg width={30} height={30} />
+        );
         break;
     }
     return <Icon name={iconName} type="Ionicons" size={size} color={color} />;
+  };
+
+  const renderHeader = () => {
+    return (
+      <Text
+        fontFamily={fonts.tmon.black}
+        color={isDarkMode ? palette.white : palette.black}
+        h3
+      >
+        CHIMHA
+      </Text>
+    );
   };
 
   const renderTabNavigation = () => {
     return (
       <Tab.Navigator
         screenOptions={({ route }) => ({
-          headerShown: false,
+          headerShown: true,
+          headerTitle: () => renderHeader(),
+          headerStyle: {
+            backgroundColor: isDarkMode ? palette.black : palette.white,
+          },
           tabBarIcon: ({ focused, color, size }) =>
             renderTabIcon(route, focused, color, size),
-          tabBarActiveTintColor: palette.primary,
-          tabBarInactiveTintColor: "gray",
+          tabBarShowLabel: false,
+          tabBarInactiveTintColor: "#333333",
           tabBarStyle: {
             backgroundColor: isDarkMode ? palette.black : palette.white,
+            borderTopWidth: 0,
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: -5,
+            },
+            shadowOpacity: 0.04,
+            shadowRadius: 6,
+            height: 90,
           },
         })}
       >
-        <Tab.Screen name={SCREENS.HOME} component={HomeScreen} />
-        <Tab.Screen name={SCREENS.SEARCH} component={SearchScreen} />
-        <Tab.Screen
-          name={SCREENS.NOTIFICATION}
-          component={NotificationScreen}
-        />
-        <Tab.Screen name={SCREENS.PROFILE} component={ProfileScreen} />
+        <Tab.Screen name={SCREENS.YOUTUBE} component={YoutubeScreen} />
+        <Tab.Screen name={SCREENS.TWITCH} component={TwitchScreen} />
+        <Tab.Screen name={SCREENS.WEBTOON} component={WebtoonScreen} />
+        <Tab.Screen name={SCREENS.CAFE} component={CafeScreen} />
+        <Tab.Screen name={SCREENS.STORE} component={StoreScreen} />
       </Tab.Navigator>
     );
   };
@@ -91,10 +140,7 @@ const Navigation = () => {
       theme={isDarkMode ? DarkTheme : LightTheme}
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name={SCREENS.HOME} component={renderTabNavigation} />
-        <Stack.Screen name={SCREENS.DETAIL}>
-          {(props) => <DetailScreen {...props} />}
-        </Stack.Screen>
+        <Stack.Screen name="Tabs" component={renderTabNavigation} />
       </Stack.Navigator>
     </NavigationContainer>
   );

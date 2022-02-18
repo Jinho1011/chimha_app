@@ -1,4 +1,7 @@
 export default {
+  tmon: {
+    black: "TmonMonsoriBlack",
+  },
   montserrat: {
     black: "Montserrat-Black",
     blackItalic: "Montserrat-BlackItalic",

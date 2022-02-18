@@ -1,8 +1,8 @@
 // ? Screens
 export const SCREENS = {
-  HOME: "Home",
-  SEARCH: "Search",
-  NOTIFICATION: "Notification",
-  PROFILE: "Profile",
-  DETAIL: "Detail",
+  YOUTUBE: "Youtube",
+  TWITCH: "Twitch",
+  WEBTOON: "Webtoon",
+  CAFE: "Cafe",
+  STORE: "Store",
 };

@@ -14,7 +14,6 @@ import CardItem from "./components/card-item/CardItem";
 /**
  * ? Shared Imports
  */
-import { SCREENS } from "@shared-constants";
 import Text from "@shared-components/text-wrapper/TextWrapper";
 import fonts from "@fonts";
 
@@ -32,9 +31,7 @@ const HomeScreen: React.FC<IHomeScreenProps> = ({ style }) => {
   const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
 
-  const handleItemPress = () => {
-    NavigationService.push(SCREENS.DETAIL);
-  };
+  const handleItemPress = () => {};
 
   /* -------------------------------------------------------------------------- */
   /*                               Render Methods                               */
