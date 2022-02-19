@@ -21,9 +21,8 @@ const App = () => {
     }
 
     const init = async () => {
-      const cafeAPI = new CafeAPI(42, 1);
-      const data = await cafeAPI.getArticles();
-      console.log("🚀 ~ file: App.tsx ~ line 26 ~ init ~ data", data);
+      const cafeAPI = new CafeAPI();
+      const data = await cafeAPI.getProfile();
     };
     init();
 
