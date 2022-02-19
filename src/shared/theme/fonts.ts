@@ -22,4 +22,12 @@ export default {
     thin: "Montserrat-Thin",
     thinItalic: "Montserrat-ThinItalic",
   },
+  notosans: {
+    black: "NotoSansKR-Black",
+    bold: "NotoSansKR-Bold",
+    light: "NotoSansKR-Light",
+    medium: "NotoSansKR-Medium",
+    regular: "NotoSansKR-Regular",
+    thin: "NotoSansKR-Thin",
+  },
 };

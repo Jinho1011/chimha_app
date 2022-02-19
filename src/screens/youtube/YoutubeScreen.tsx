@@ -5,7 +5,11 @@ import { useTheme } from "@react-navigation/native";
  * ? Local Imports
  */
 import createStyles from "./YoutubeScreen.style";
+/**
+ * ? Local Imports
+ */
 import Text from "@shared-components/text-wrapper/TextWrapper";
+import fonts from "@fonts";
 
 const YoutubeScreen = () => {
   const theme = useTheme();
@@ -14,7 +18,7 @@ const YoutubeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text h1 color={colors.text}>
+      <Text h1 color={colors.text} fontFamily={fonts.notosans.bold}>
         Youtube
       </Text>
     </View>

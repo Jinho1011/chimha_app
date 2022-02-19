@@ -41,7 +41,7 @@
 	<string/>
 	<key>UIAppFonts</key>
 	<array>
-	    <string>Roboto_medium.ttf</string>
+	<string>Roboto_medium.ttf</string>
 		<string>Roboto.ttf</string>
 		<string>rubicon-icon-font.ttf</string>
 		<string>AntDesign.ttf</string>
@@ -60,6 +60,7 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>rubicon-icon-font.ttf</string>
 		<string>Montserrat-Black.ttf</string>
 		<string>Montserrat-BlackItalic.ttf</string>
 		<string>Montserrat-Bold.ttf</string>
@@ -80,6 +81,12 @@
 		<string>Montserrat-ThinItalic.ttf</string>
 		<string>fonts/TMONBlack.ttf</string>
 		<string>TMONBlack.ttf</string>
+		<string>NotoSansKR-Black.otf</string>
+		<string>NotoSansKR-Bold.otf</string>
+		<string>NotoSansKR-Light.otf</string>
+		<string>NotoSansKR-Medium.otf</string>
+		<string>NotoSansKR-Regular.otf</string>
+		<string>NotoSansKR-Thin.otf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
