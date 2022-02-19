@@ -7,7 +7,7 @@ import SplashScreen from "react-native-splash-screen";
  */
 import Navigation from "./src/services/navigation";
 import { isAndroid } from "@freakycoder/react-native-helpers";
-import { CafeAPI } from "@services/api/index";
+import { CafeAPI, YoutubeAPI } from "@services/api/index";
 
 const App = () => {
   const scheme = useColorScheme();
@@ -19,12 +19,6 @@ const App = () => {
       StatusBar.setBackgroundColor("rgba(0,0,0,0)");
       StatusBar.setTranslucent(true);
     }
-
-    const init = async () => {
-      const cafeAPI = new CafeAPI();
-      const data = await cafeAPI.getProfile();
-    };
-    init();
 
     setTimeout(() => {
       SplashScreen.hide();
