@@ -13,8 +13,8 @@ export default (theme: ExtendedTheme) => {
   return StyleSheet.create<Style>({
     container: {
       flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
+      flexDirection: "column",
+      backgroundColor: colors.background,
     },
     titleTextStyle: {
       fontSize: 32,

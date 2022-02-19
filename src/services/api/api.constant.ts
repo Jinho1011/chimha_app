@@ -8,7 +8,7 @@ export const MENU_IDS = {
   "침착맨 전용게시판": 42,
 };
 export const CHANNEL_IDS = [
-  { name: "침착맨", id: "UCUj6rrhMTR9pipbAWBAMvUQ" },
-  { name: "침착맨 플러스", id: "UCC1LvVTX2ySKYjeIXkAtvsQ" },
-  { name: "침착맨 원본 박물관", id: "UCewitUbsXnyjvJjGgxa0IYw" },
+  { name: "침착맨", id: "UCUj6rrhMTR9pipbAWBAMvUQ", order: 1 },
+  { name: "침착맨 플러스", id: "UCC1LvVTX2ySKYjeIXkAtvsQ", order: 2 },
+  { name: "침착맨 원본 박물관", id: "UCewitUbsXnyjvJjGgxa0IYw", order: 3 },
 ];

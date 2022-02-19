@@ -3,7 +3,8 @@ import { DefaultTheme, ExtendedTheme } from "@react-navigation/native";
 export const palette = {
   primary: "#0564d4",
   secondary: "#ff6a00",
-  background: "#f6f8fa",
+  background: "#ffffff",
+  content: "#eeeeee",
   white: "#fff",
   black: "#101214",
   button: "#1c1e21",
@@ -14,6 +15,7 @@ export const palette = {
   placeholder: "#a1a1a1",
   danger: "rgb(208, 2, 27)",
   title: "rgb(102, 102, 102)",
+  subtitle: "#999",
   separator: "rgb(194, 194, 195)",
   highlight: "rgb(199, 198, 203)",
   blackOverlay: "rgba(0,0,0,0.6)",
@@ -39,6 +41,8 @@ export const DarkTheme: ExtendedTheme = {
   colors: {
     ...LightTheme.colors,
     background: palette.black,
+    content: "#2F3134",
+    subtitle: "#eee",
     foreground: palette.white,
     text: palette.white,
     tabBar: palette.black,
