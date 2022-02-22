@@ -1,5 +1,12 @@
 import React, { useMemo, useEffect, useState } from "react";
-import { Image, View, Dimensions } from "react-native";
+import {
+  Image,
+  View,
+  Dimensions,
+  ScrollView,
+  FlatList,
+  SafeAreaView,
+} from "react-native";
 import { useTheme } from "@react-navigation/native";
 import styled from "styled-components/native";
 
@@ -11,6 +18,7 @@ import fonts from "@fonts";
 import createStyles from "./YoutubeScreen.style";
 import { YoutubeAPI } from "@api";
 import { CHANNEL_IDS } from "../../services/api/api.constant";
+import { subcontents } from "./mock";
 
 const screenWidth = Dimensions.get("screen").width;
 
@@ -50,8 +58,8 @@ const YoutubeScreen = () => {
     init();
   }, []);
 
-  const Component = styled.View`
-    padding: 20px 20px 0 20px;
+  const Container = styled.View`
+    padding: 20px;
   `;
 
   const Title = styled.Text`
@@ -75,6 +83,7 @@ const YoutubeScreen = () => {
 
   const Contents = styled.View`
     flex-direction: column;
+    margin-bottom: 20px;
   `;
 
   const Content = styled(RNBounceable)`
@@ -106,11 +115,34 @@ const YoutubeScreen = () => {
     width: ${screenWidth - 144}px;
   `;
 
-  const Box = styled.Pressable``;
+  const Box = styled.Pressable`
+    margin-right: 10px;
+    margin-bottom: 8px;
+    width: ${Math.round((screenWidth - 40) / 2) - 10}px;
+  `;
 
-  return (
-    <View style={styles.container}>
-      <Component>
+  const BoxImage = styled.Image`
+    width: ${Math.round((screenWidth - 40) / 2) - 10}px;
+    height: 100px;
+    border-radius: 10px;
+  `;
+
+  const BoxTitle = styled.Text`
+    margin-top: 10px;
+    font-family: ${fonts.notosans.regular};
+    font-size: 16px;
+    color: ${colors.text};
+  `;
+
+  const BoxChannel = styled.Text`
+    font-family: ${fonts.notosans.regular};
+    font-size: 12px;
+    color: ${colors.subtitle};
+  `;
+
+  const renderHeader = () => {
+    return (
+      <View>
         <TitleContainer>
           <Title>YouTube</Title>
           <Subtitle>침투부 채널</Subtitle>
@@ -122,15 +154,6 @@ const YoutubeScreen = () => {
                 key={item.title}
                 onPress={() => {
                   console.log("Pressed");
-                }}
-                style={{
-                  shadowColor: "#000",
-                  shadowOffset: {
-                    width: 0,
-                    height: 4,
-                  },
-                  shadowOpacity: 0.06,
-                  shadowRadius: 4,
                 }}
               >
                 <Image
@@ -145,15 +168,61 @@ const YoutubeScreen = () => {
             );
           })}
         </Contents>
-      </Component>
-      <Component>
         <TitleContainer>
           <Title>Sub Contents</Title>
           <Subtitle>침착맨의 외부 방송</Subtitle>
         </TitleContainer>
-        <Contents></Contents>
-      </Component>
-    </View>
+      </View>
+    );
+  };
+
+  interface Subcontent {
+    id: string;
+    title: string;
+    channel: string;
+    image: any;
+  }
+
+  interface Subcontent {
+    id: string;
+    title: string;
+    channel: string;
+    image: any;
+  }
+
+  const renderContent = ({ item }: any) => {
+    return (
+      <Box
+        style={{
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 2,
+            height: 4,
+          },
+          shadowOpacity: 0.06,
+          shadowRadius: 4,
+        }}
+      >
+        <BoxImage source={item.image} />
+        <BoxTitle>{item.title}</BoxTitle>
+        <BoxChannel>{item.channel}</BoxChannel>
+      </Box>
+    );
+  };
+
+  return (
+    <Container style={styles.container}>
+      <FlatList
+        nestedScrollEnabled
+        data={subcontents}
+        renderItem={(item) => renderContent(item)}
+        keyExtractor={(item) => item.id}
+        numColumns={2}
+        ListHeaderComponent={() => renderHeader()}
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+      />
+    </Container>
   );
 };
 
