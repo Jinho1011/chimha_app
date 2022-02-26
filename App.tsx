@@ -1,6 +1,6 @@
 import "react-native-gesture-handler";
 import React from "react";
-import { StatusBar, useColorScheme } from "react-native";
+import { StatusBar, useColorScheme, LogBox } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 /**
  * ? Local Imports
@@ -8,11 +8,10 @@ import SplashScreen from "react-native-splash-screen";
 import Navigation from "./src/services/navigation";
 import { isAndroid } from "@freakycoder/react-native-helpers";
 
-console.disableYellowBox = true;
-
 const App = () => {
   const scheme = useColorScheme();
   const isDarkMode = scheme === "dark";
+  LogBox.ignoreAllLogs(true);
 
   React.useEffect(() => {
     StatusBar.setBarStyle(isDarkMode ? "light-content" : "dark-content");
