@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useState } from "react";
+import React, { useMemo, useEffect, useState, useCallback } from "react";
 import {
   Image,
   View,
@@ -31,6 +31,7 @@ interface Youtube {
   title: string;
   desc: string;
   thumb: string;
+  url: string;
 }
 
 const YoutubeScreen = () => {
@@ -48,10 +49,12 @@ const YoutubeScreen = () => {
       let res = [];
       for (let i = 0; i < CHANNEL_IDS.length; i++) {
         const data = await YT.getChannelInfo(CHANNEL_IDS[i].id);
+
         res.push({
           title: data.items[0].snippet.title,
           desc: data.items[0].snippet.description,
           thumb: data.items[0].snippet.thumbnails.default.url,
+          url: data.items[0].id,
         });
       }
       setState({ youtube: res });
@@ -118,7 +121,7 @@ const YoutubeScreen = () => {
 
   const Box = styled.Pressable`
     margin-right: 10px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     width: ${Math.round((screenWidth - 40) / 2) - 10}px;
   `;
 
@@ -129,7 +132,7 @@ const YoutubeScreen = () => {
   `;
 
   const BoxTitle = styled.Text`
-    margin-top: 10px;
+    margin-top: 4px;
     font-family: ${fonts.notosans.regular};
     font-size: 16px;
     color: ${colors.text};
@@ -154,7 +157,11 @@ const YoutubeScreen = () => {
               <Content
                 key={item.title}
                 onPress={() => {
-                  console.log("Pressed");
+                  openUrl(
+                    "vnd.youtube://user/channel/",
+                    "https://www.youtube.com/channel/",
+                    item.url,
+                  );
                 }}
               >
                 <Image
@@ -177,31 +184,27 @@ const YoutubeScreen = () => {
     );
   };
 
+  const openUrl = async (appUrl: string, webUrl: string, id: string) => {
+    const isValid = await Linking.canOpenURL(appUrl + id);
+    const baseUrl = isValid ? appUrl + id : webUrl + id;
+
+    try {
+      await Linking.openURL(baseUrl);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const renderContent = ({ item }: any) => {
-    const openUrl = async () => {
-      const isValid = await Linking.canOpenURL(
-        "vnd.youtube://playlist/list/" + item.url,
-      );
-      // try {
-      //   Linking.openURL("vnd.youtube://playlist/list/" + item.url);
-      // } catch (e) {
-      //   Linking.openURL("www.youtube.com/playlist?list=" + item.url);
-      // }
-
-      // Linking.canOpenURL("vnd.youtube://playlist/list/" + item.url).then(
-      //   (supported) => {
-      //     if (supported) {
-      //       return Linking.openURL("vnd.youtube://playlist/list/" + item.url);
-      //     } else {
-      //       return Linking.openURL("www.youtube.com/playlist?list=" + item.url);
-      //     }
-      //   },
-      // );
-    };
-
     return (
       <Box
-        onPress={() => openUrl()}
+        onPress={() =>
+          openUrl(
+            "vnd.youtube://playlist/list/",
+            "https://www.youtube.com/playlist?list=",
+            item.url,
+          )
+        }
         style={{
           shadowColor: "#000",
           shadowOffset: {
