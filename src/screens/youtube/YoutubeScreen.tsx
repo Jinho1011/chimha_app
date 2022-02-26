@@ -6,6 +6,7 @@ import {
   ScrollView,
   FlatList,
   SafeAreaView,
+  Linking,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import styled from "styled-components/native";
@@ -59,7 +60,7 @@ const YoutubeScreen = () => {
   }, []);
 
   const Container = styled.View`
-    padding: 20px;
+    padding: 20px 20px 0 20px;
   `;
 
   const Title = styled.Text`
@@ -176,23 +177,31 @@ const YoutubeScreen = () => {
     );
   };
 
-  interface Subcontent {
-    id: string;
-    title: string;
-    channel: string;
-    image: any;
-  }
-
-  interface Subcontent {
-    id: string;
-    title: string;
-    channel: string;
-    image: any;
-  }
-
   const renderContent = ({ item }: any) => {
+    const openUrl = async () => {
+      const isValid = await Linking.canOpenURL(
+        "vnd.youtube://playlist/list/" + item.url,
+      );
+      // try {
+      //   Linking.openURL("vnd.youtube://playlist/list/" + item.url);
+      // } catch (e) {
+      //   Linking.openURL("www.youtube.com/playlist?list=" + item.url);
+      // }
+
+      // Linking.canOpenURL("vnd.youtube://playlist/list/" + item.url).then(
+      //   (supported) => {
+      //     if (supported) {
+      //       return Linking.openURL("vnd.youtube://playlist/list/" + item.url);
+      //     } else {
+      //       return Linking.openURL("www.youtube.com/playlist?list=" + item.url);
+      //     }
+      //   },
+      // );
+    };
+
     return (
       <Box
+        onPress={() => openUrl()}
         style={{
           shadowColor: "#000",
           shadowOffset: {
@@ -210,15 +219,20 @@ const YoutubeScreen = () => {
     );
   };
 
+  const renderFooter = () => {
+    return <View style={{ padding: 10 }} />;
+  };
+
   return (
     <Container style={styles.container}>
       <FlatList
         nestedScrollEnabled
         data={subcontents}
-        renderItem={(item) => renderContent(item)}
         keyExtractor={(item) => item.id}
         numColumns={2}
+        renderItem={(item) => renderContent(item)}
         ListHeaderComponent={() => renderHeader()}
+        ListFooterComponent={() => renderFooter()}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       />
