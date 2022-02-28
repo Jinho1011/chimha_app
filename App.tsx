@@ -6,6 +6,7 @@ import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import { Provider, useDispatch } from "react-redux";
 import logger from "redux-logger";
 import { composeWithDevTools } from "redux-devtools-extension";
+import { QueryClient, QueryClientProvider } from "react-query";
 /**
  * ? Local Imports
  */
@@ -13,6 +14,11 @@ import Navigation from "./src/services/navigation";
 import { isAndroid } from "@freakycoder/react-native-helpers";
 import loading from "./src/shared/store/reducers/loading";
 
+const queryClient = new QueryClient();
+
+/* -------------------------------------------------------------------------- */
+/*                               Redux Methods                                */
+/* -------------------------------------------------------------------------- */
 const enhancer =
   process.env.NODE_ENV === "production"
     ? compose(applyMiddleware())
@@ -42,9 +48,11 @@ const App = () => {
   }, [scheme]);
 
   return (
-    <Provider store={store}>
-      <Navigation />
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <Navigation />
+      </Provider>
+    </QueryClientProvider>
   );
 };
 
