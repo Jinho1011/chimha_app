@@ -74,6 +74,21 @@ const Header = ({ youtube, openUrl }: IHeader) => {
     width: ${screenWidth - 144}px;
   `;
 
+  const TitlePlaceHolder = styled.View`
+    width: 100px;
+    height: 20px;
+    background-color: #a7a7a7;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  `;
+
+  const DescPlaceHolder = styled.View`
+    width: 200px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 10px;
+  `;
+
   return (
     <View>
       <TitleContainer>
@@ -84,7 +99,7 @@ const Header = ({ youtube, openUrl }: IHeader) => {
         {youtube.map((item: Youtube) => {
           return (
             <Content
-              key={item.title}
+              key={item.url}
               onPress={() => {
                 openUrl(
                   "vnd.youtube://user/channel/",
@@ -98,8 +113,17 @@ const Header = ({ youtube, openUrl }: IHeader) => {
                 style={{ width: 52, height: 52, borderRadius: 30 }}
               />
               <ContentTitleContainer>
-                <ContentTitle>{item.title}</ContentTitle>
-                <ContentSubTitle>{item.desc}</ContentSubTitle>
+                {item.title === "" ? (
+                  <>
+                    <TitlePlaceHolder />
+                    <DescPlaceHolder />
+                  </>
+                ) : (
+                  <>
+                    <ContentTitle>{item.title}</ContentTitle>
+                    <ContentSubTitle>{item.desc}</ContentSubTitle>
+                  </>
+                )}
               </ContentTitleContainer>
             </Content>
           );

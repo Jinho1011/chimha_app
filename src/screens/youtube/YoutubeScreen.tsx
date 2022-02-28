@@ -10,7 +10,7 @@ import { State } from "@shared-interfaces/youtube/youtube";
 import createStyles from "./YoutubeScreen.style";
 import { YoutubeAPI } from "@api";
 import { CHANNEL_IDS } from "../../services/api/api.constant";
-import { subcontents } from "./mock";
+import { subcontents, dummy } from "./mock";
 import Header from "./components/Header";
 import Content from "./components/Content";
 
@@ -19,24 +19,24 @@ const YoutubeScreen = () => {
   const styles = useMemo(() => createStyles(theme), [theme]);
 
   const [state, setState] = useState<State>({
-    youtube: [],
+    youtube: [...dummy],
   });
 
   useEffect(() => {
     const init = async () => {
       const YT = new YoutubeAPI();
-      let res = [];
-      for (let i = 0; i < CHANNEL_IDS.length; i++) {
-        const data = await YT.getChannelInfo(CHANNEL_IDS[i].id);
-
-        res.push({
-          title: data.items[0].snippet.title,
-          desc: data.items[0].snippet.description,
-          thumb: data.items[0].snippet.thumbnails.default.url,
-          url: data.items[0].id,
-        });
-      }
-      setState({ youtube: res });
+      const youtube = await Promise.all(
+        CHANNEL_IDS.map(async (value, index) => {
+          const data = await YT.getChannelInfo(value.id);
+          return {
+            title: data.items[0].snippet.title,
+            desc: data.items[0].snippet.description,
+            thumb: data.items[0].snippet.thumbnails.default.url,
+            url: data.items[0].id,
+          };
+        }),
+      );
+      setState({ youtube });
     };
     init();
   }, []);

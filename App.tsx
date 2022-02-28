@@ -3,7 +3,7 @@ import React from "react";
 import { StatusBar, useColorScheme, LogBox } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import logger from "redux-logger";
 import { composeWithDevTools } from "redux-devtools-extension";
 /**
@@ -36,9 +36,9 @@ const App = () => {
       StatusBar.setTranslucent(true);
     }
 
-    setTimeout(() => {
+    return () => {
       SplashScreen.hide();
-    }, 750);
+    };
   }, [scheme]);
 
   return (
