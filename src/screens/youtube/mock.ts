@@ -1,10 +1,4 @@
-interface Subcontent {
-  id: string;
-  title: string;
-  channel: string;
-  image: any;
-  url: string;
-}
+import { Subcontent } from "@shared-interfaces/youtube/subcontent";
 
 export const subcontents: Subcontent[] = [
   {

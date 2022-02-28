@@ -30,6 +30,7 @@
     "paths": {
       "@shared-components/*": ["./shared/components/*"],
       "@shared-constants": ["./shared/constants"],
+      "@shared-interfaces/*": ["./shared/interfaces/*"],
       "@font-size": ["./shared/theme/font-size"],
       "@api": ["./services/api/index"],
       "@fonts": ["./shared/theme/fonts"],
