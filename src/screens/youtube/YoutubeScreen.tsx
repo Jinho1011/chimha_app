@@ -2,15 +2,15 @@ import React, { useMemo, useEffect, useState } from "react";
 import { View, FlatList, Linking } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import styled from "styled-components/native";
-
+import { useQuery, useQueries } from "react-query";
 /**
  * ? Local Imports
  */
-import { State } from "@shared-interfaces/youtube/youtube";
+import { YoutubeFetch } from "@shared-interfaces/youtube/youtube";
 import createStyles from "./YoutubeScreen.style";
-import { YoutubeAPI } from "@api";
+import { getChannelInfo } from "../../services/api/youtube";
 import { CHANNEL_IDS } from "../../services/api/api.constant";
-import { subcontents, dummy } from "./mock";
+import { subcontents } from "./mock";
 import Header from "./components/Header";
 import Content from "./components/Content";
 
@@ -18,28 +18,14 @@ const YoutubeScreen = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
 
-  const [state, setState] = useState<State>({
-    youtube: [...dummy],
-  });
-
-  useEffect(() => {
-    const init = async () => {
-      const YT = new YoutubeAPI();
-      const youtube = await Promise.all(
-        CHANNEL_IDS.map(async (value, index) => {
-          const data = await YT.getChannelInfo(value.id);
-          return {
-            title: data.items[0].snippet.title,
-            desc: data.items[0].snippet.description,
-            thumb: data.items[0].snippet.thumbnails.default.url,
-            url: data.items[0].id,
-          };
-        }),
-      );
-      setState({ youtube });
-    };
-    init();
-  }, []);
+  const youtubes = useQueries(
+    CHANNEL_IDS.map((value, index) => {
+      return {
+        queryKey: ["youtube", index],
+        queryFn: () => getChannelInfo(value.id),
+      };
+    }),
+  );
 
   const Container = styled.View`
     padding: 20px 20px 0 20px;
@@ -69,7 +55,7 @@ const YoutubeScreen = () => {
         numColumns={2}
         renderItem={(item) => <Content item={item.item} openUrl={openUrl} />}
         ListHeaderComponent={() => (
-          <Header youtube={state.youtube} openUrl={openUrl} />
+          <Header youtube={youtubes} openUrl={openUrl} />
         )}
         ListFooterComponent={() => <Footer />}
         showsVerticalScrollIndicator={false}

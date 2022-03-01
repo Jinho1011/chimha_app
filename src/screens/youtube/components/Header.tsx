@@ -6,12 +6,12 @@ import styled from "styled-components/native";
 /**
  * ? Local Imports
  */
-import { Youtube } from "@shared-interfaces/youtube/youtube";
+import { YoutubeFetch } from "@shared-interfaces/youtube/youtube";
 import RNBounceable from "@freakycoder/react-native-bounceable";
 import fonts from "@fonts";
 
 interface IHeader {
-  youtube: Youtube[];
+  youtube: any[] | YoutubeFetch[];
   openUrl: Function;
 }
 
@@ -96,37 +96,51 @@ const Header = ({ youtube, openUrl }: IHeader) => {
         <Subtitle>침투부 채널</Subtitle>
       </TitleContainer>
       <Contents>
-        {youtube.map((item: Youtube) => {
-          return (
-            <Content
-              key={item.url}
-              onPress={() => {
-                openUrl(
-                  "vnd.youtube://user/channel/",
-                  "https://www.youtube.com/channel/",
-                  item.url,
-                );
-              }}
-            >
-              <Image
-                source={{ uri: item.thumb }}
-                style={{ width: 52, height: 52, borderRadius: 30 }}
-              />
-              <ContentTitleContainer>
-                {item.title === "" ? (
-                  <>
-                    <TitlePlaceHolder />
-                    <DescPlaceHolder />
-                  </>
-                ) : (
-                  <>
-                    <ContentTitle>{item.title}</ContentTitle>
-                    <ContentSubTitle>{item.desc}</ContentSubTitle>
-                  </>
-                )}
-              </ContentTitleContainer>
-            </Content>
-          );
+        {youtube.map((item, index: number) => {
+          if (item.isLoading) {
+            return (
+              <Content key={index}>
+                <Image
+                  source={{
+                    uri: "https://via.placeholder.com/150/C4C4C4/C4C4C4?Text=1",
+                  }}
+                  style={{ width: 52, height: 52, borderRadius: 30 }}
+                />
+                <ContentTitleContainer>
+                  <TitlePlaceHolder />
+                  <DescPlaceHolder />
+                </ContentTitleContainer>
+              </Content>
+            );
+          } else {
+            return (
+              <Content
+                key={item.data.items[0].id}
+                onPress={() => {
+                  openUrl(
+                    "vnd.youtube://user/channel/",
+                    "https://www.youtube.com/channel/",
+                    item.data.items[0].id,
+                  );
+                }}
+              >
+                <Image
+                  source={{
+                    uri: item.data.items[0].snippet.thumbnails.default.url,
+                  }}
+                  style={{ width: 52, height: 52, borderRadius: 30 }}
+                />
+                <ContentTitleContainer>
+                  <ContentTitle>
+                    {item.data.items[0].snippet.title}
+                  </ContentTitle>
+                  <ContentSubTitle>
+                    {item.data.items[0].snippet.description}
+                  </ContentSubTitle>
+                </ContentTitleContainer>
+              </Content>
+            );
+          }
         })}
       </Contents>
       <TitleContainer>
