@@ -41,10 +41,7 @@ const App = () => {
       StatusBar.setBackgroundColor("rgba(0,0,0,0)");
       StatusBar.setTranslucent(true);
     }
-
-    return () => {
-      SplashScreen.hide();
-    };
+    SplashScreen.hide();
   }, [scheme]);
 
   return (
