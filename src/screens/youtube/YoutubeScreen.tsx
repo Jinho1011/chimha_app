@@ -1,13 +1,11 @@
-import React, { useMemo, useEffect, useState } from "react";
+import React from "react";
 import { View, FlatList, Linking } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import styled from "styled-components/native";
-import { useQuery, useQueries } from "react-query";
+import { useQueries } from "react-query";
 /**
  * ? Local Imports
  */
-import { YoutubeFetch } from "@shared-interfaces/youtube/youtube";
-import createStyles from "./YoutubeScreen.style";
 import { getChannelInfo } from "../../services/api/youtube";
 import { CHANNEL_IDS } from "../../services/api/api.constant";
 import { subcontents } from "./mock";
@@ -16,7 +14,7 @@ import Content from "./components/Content";
 
 const YoutubeScreen = () => {
   const theme = useTheme();
-  const styles = useMemo(() => createStyles(theme), [theme]);
+  const { colors } = theme;
 
   const youtubes = useQueries(
     CHANNEL_IDS.map((value, index) => {
@@ -29,6 +27,9 @@ const YoutubeScreen = () => {
 
   const Container = styled.View`
     padding: 20px 20px 0 20px;
+    flex: 1;
+    flex-direction: column;
+    background-color: ${colors.background};
   `;
 
   const openUrl = async (appUrl: string, webUrl: string, id: string) => {
@@ -47,7 +48,7 @@ const YoutubeScreen = () => {
   };
 
   return (
-    <Container style={styles.container}>
+    <Container>
       <FlatList
         nestedScrollEnabled
         data={subcontents}

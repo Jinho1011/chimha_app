@@ -1,5 +1,5 @@
 import { TWITCH_ID, TWITCH_TOKEN } from "./key";
-import { IsLive, Channel, Followers } from "@shared-interfaces/twitch";
+import { IsLive, Channel, Followers, Stream } from "@shared-interfaces/twitch";
 
 var myHeaders = new Headers();
 myHeaders.append("Authorization", `Bearer ${TWITCH_TOKEN}`);
@@ -25,9 +25,16 @@ export const getChannelInfo = (id: string): Promise<Channel> => {
   ).then((res) => res.json());
 };
 
-export const getFollowers = (): Promise<Followers> => {
+export const getFollowers = (id: string): Promise<Followers> => {
   return fetch(
-    "https://api.twitch.tv/helix/users/follows?to_id=66375105",
+    `https://api.twitch.tv/helix/users/follows?to_id=${id}`,
+    requestOptions,
+  ).then((res) => res.json());
+};
+
+export const getStream = (id: string): Promise<Stream> => {
+  return fetch(
+    `https://api.twitch.tv/helix/streams?user_id=${id}`,
     requestOptions,
   ).then((res) => res.json());
 };
