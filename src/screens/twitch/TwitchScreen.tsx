@@ -14,6 +14,8 @@ import {
 } from "../../services/api/twitch";
 import { Title, Subtitle, Text, Subtext } from "../../shared/components/styled";
 
+const screenWidth = Dimensions.get("screen").width;
+
 const Container = styled.View`
   padding: 20px 20px 0 20px;
 `;
@@ -24,7 +26,11 @@ const TitleContainer = styled.View``;
 
 const StreamingContainer = styled.Pressable``;
 
-const Streaming = styled.Image``;
+const StreamingImage = styled.Image`
+  width: ${screenWidth - 40}px;
+  height: ${Math.round((screenWidth - 40) / 2)}px;
+  border-radius: 16px;
+`;
 
 const UserContainer = styled.View``;
 
@@ -35,22 +41,40 @@ const TwitchScreen = () => {
   const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
 
-  const isLive = useQuery("isLive", getIsLive);
-  const channel = useQuery("channel", () => getChannelInfo("66375105"));
+  const { data: LiveData, isLoading: IsLiveLoading } = useQuery(
+    "isLive",
+    getIsLive,
+  );
+  const { data: ChannelData, isLoading: IsChannelLoading } = useQuery(
+    "channel",
+    () => getChannelInfo("66375105"),
+  );
   const followers = useQuery("followers", getFollowers);
-
-  React.useEffect(() => {
-    // console.log(JSON.stringify(followers.data, null, 4));
-  }, [isLive, channel, followers]);
 
   return (
     <Container style={styles.container}>
       <Header>
         <TitleContainer>
-          <Title>Twitch Live</Title>
-          <Subtitle>침착맨 생방송 채널</Subtitle>
+          {/* <Title color={colors.text}>Twitch Live</Title>
+          <Subtitle color={colors.subtitle}>침착맨 생방송 채널</Subtitle> */}
         </TitleContainer>
-        <StreamingContainer>{/* <Streaming /> */}</StreamingContainer>
+        <StreamingContainer>
+          {IsLiveLoading && IsChannelLoading ? (
+            <StreamingImage
+              source={{
+                uri: "https://via.placeholder.com/500/C4C4C4/C4C4C4?Text=Image",
+              }}
+            />
+          ) : LiveData?.data[0].is_live ? (
+            <StreamingImage
+              source={{ uri: ChannelData?.data[0].profile_image_url }}
+            />
+          ) : (
+            <StreamingImage
+              source={{ uri: ChannelData?.data[0].offline_image_url }}
+            />
+          )}
+        </StreamingContainer>
         <UserContainer>{/* <UserThumb /> */}</UserContainer>
       </Header>
     </Container>

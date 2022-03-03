@@ -1,4 +1,4 @@
-import { useTheme } from "@react-navigation/native";
+import React from "react";
 import styled from "styled-components/native";
 
 /**
@@ -6,29 +6,26 @@ import styled from "styled-components/native";
  */
 import fonts from "@fonts";
 
-const theme = useTheme();
-const { colors } = theme;
-
-export const Title = styled.Text`
+export const Title = styled.Text<{ color?: string }>`
   font-family: ${fonts.notosans.medium};
   font-size: 18px;
-  color: ${colors.text};
+  color: ${(props) => props.color};
 `;
 
-export const Subtitle = styled.Text`
+export const Subtitle = styled.Text<{ color?: string }>`
   font-family: ${fonts.notosans.light};
   font-size: 14px;
-  color: ${colors.subtitle};
+  color: ${(props) => props.color};
 `;
 
-export const Text = styled.Text`
+export const Text = styled.Text<{ color?: string }>`
   font-family: ${fonts.notosans.regular};
   font-size: 16px;
-  color: ${colors.text};
+  color: ${(props) => props.color};
 `;
 
-export const Subtext = styled.Text`
+export const Subtext = styled.Text<{ color?: string }>`
   font-family: ${fonts.notosans.regular};
   font-size: 12px;
-  color: ${colors.subtitle};
+  color: ${(props) => props.color};
 `;
