@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { View } from "react-native";
+import { Dimensions } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { useQuery } from "react-query";
 import styled from "styled-components/native";

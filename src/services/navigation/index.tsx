@@ -122,8 +122,8 @@ const Navigation = () => {
           },
         })}
       >
-        {/* <Tab.Screen name={SCREENS.YOUTUBE} component={YoutubeScreen} />
-        <Tab.Screen name={SCREENS.TWITCH} component={TwitchScreen} /> */}
+        <Tab.Screen name={SCREENS.YOUTUBE} component={YoutubeScreen} />
+        <Tab.Screen name={SCREENS.TWITCH} component={TwitchScreen} />
         <Tab.Screen name={SCREENS.WEBTOON} component={WebtoonScreen} />
         <Tab.Screen name={SCREENS.CAFE} component={CafeScreen} />
         <Tab.Screen name={SCREENS.STORE} component={StoreScreen} />
