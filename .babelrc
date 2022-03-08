@@ -8,6 +8,7 @@
         "alias": [
           { "@shared-components": "./src/shared/components" },
           { "@shared-constants": "./src/shared/constants" },
+          { "@shared-interfaces": "./src/shared/interfaces" },
           { "@font-size": "./src/shared/theme/font-size" },
           { "@api": "./src/services/api/index" },
           { "@fonts": "./src/shared/theme/fonts" },

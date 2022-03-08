@@ -1,10 +1,4 @@
-interface Subcontent {
-  id: string;
-  title: string;
-  channel: string;
-  image: any;
-  url: string;
-}
+import { Subcontent } from "@shared-interfaces/youtube/subcontent";
 
 export const subcontents: Subcontent[] = [
   {
@@ -41,5 +35,26 @@ export const subcontents: Subcontent[] = [
     channel: "카카오TV",
     image: require("../../assets/images/subcontents/madang.jpeg"),
     url: "PL0_kB7f3Zz8m39F6dajE_9HrA8Q7n6xgi",
+  },
+];
+
+export const dummy = [
+  {
+    title: "",
+    desc: "",
+    thumb: "https://via.placeholder.com/150/C4C4C4/C4C4C4?Text=1",
+    url: "https://via.placeholder.com/150/C4C4C4/C4C4C4?Text=1",
+  },
+  {
+    title: "",
+    desc: "",
+    thumb: "https://via.placeholder.com/150/C4C4C4/C4C4C4?Text=2",
+    url: "https://via.placeholder.com/150/C4C4C4/C4C4C4?Text=2",
+  },
+  {
+    title: "",
+    desc: "",
+    thumb: "https://via.placeholder.com/150/C4C4C4/C4C4C4?Text=3",
+    url: "https://via.placeholder.com/150/C4C4C4/C4C4C4?Text=3",
   },
 ];

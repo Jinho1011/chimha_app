@@ -1,23 +1,106 @@
-import React, { useMemo } from "react";
-import { View } from "react-native";
+import React, { useState } from "react";
+import { Dimensions, Linking, FlatList, ActivityIndicator } from "react-native";
 import { useTheme } from "@react-navigation/native";
+import { useQuery, useQueries, UseQueryResult } from "react-query";
+import styled from "styled-components/native";
 /**
  * ? Local Imports
  */
-import createStyles from "./TwitchScreen.style";
-import Text from "@shared-components/text-wrapper/TextWrapper";
+import {
+  getIsLive,
+  getChannelInfo,
+  getFollowers,
+  getStream,
+} from "../../services/api/twitch";
+import Header from "./components/Header";
+import Content from "./components/Content";
+import { Title, Subtitle, Text, Subtext } from "../../shared/components/styled";
+import { TwitchSvg } from "../../shared/components/svg/svg";
+import { IsLive, Channel, Followers, Stream } from "@shared-interfaces/twitch";
+import { BDRZ } from "./mock";
 
 const TwitchScreen = () => {
   const theme = useTheme();
   const { colors } = theme;
-  const styles = useMemo(() => createStyles(theme), [theme]);
+
+  const { data: LiveData, isLoading: IsLiveLoading } = useQuery(
+    "isLive",
+    getIsLive,
+  );
+  const { data: ChannelData, isLoading: IsChannelLoading } = useQuery(
+    "channel",
+    () => getChannelInfo("66375105"),
+  );
+  const { data: FollowData, isLoading: IsFollowLoading } = useQuery(
+    "followers",
+    () => getFollowers("66375105"),
+  );
+  const { data: StreamData, isLoading: IsStreamLoading } = useQuery(
+    "stream",
+    () => getStream("66375105"),
+  );
+
+  const bdrzs = useQueries(
+    BDRZ.map((value, index) => {
+      return {
+        queryKey: ["bdrz", index],
+        queryFn: () => getChannelInfo(value.id),
+      };
+    }),
+  );
+
+  const Container = styled.View`
+    padding: 20px 20px 0 20px;
+    flex: 1;
+    flex-direction: column;
+    background-color: ${colors.background};
+  `;
+
+  const openUrl = async (appUrl: string, webUrl: string) => {
+    const isValid = await Linking.canOpenURL(appUrl);
+    const baseUrl = isValid ? appUrl : webUrl;
+
+    try {
+      await Linking.openURL(baseUrl);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
-    <View style={styles.container}>
-      <Text h1 color={colors.text}>
-        Twitch
-      </Text>
-    </View>
+    <Container>
+      {bdrzs.every((e) => !e.isLoading) &&
+      !IsLiveLoading &&
+      !IsChannelLoading &&
+      !IsFollowLoading &&
+      !IsStreamLoading ? (
+        <FlatList
+          nestedScrollEnabled
+          data={bdrzs}
+          keyExtractor={(item) => item?.data?.data[0].id}
+          numColumns={4}
+          renderItem={({ item }) => <Content value={item} openUrl={openUrl} />}
+          ListHeaderComponent={() => (
+            <Header
+              openUrl={openUrl}
+              LiveData={LiveData}
+              ChannelData={ChannelData}
+              FollowData={FollowData}
+              StreamData={StreamData}
+            />
+          )}
+          columnWrapperStyle={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginBottom: 20,
+          }}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+        />
+      ) : (
+        <ActivityIndicator />
+      )}
+    </Container>
   );
 };
 
