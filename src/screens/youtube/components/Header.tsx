@@ -42,7 +42,7 @@ const Header = ({ youtube, openUrl }: IHeader) => {
 
   const Contents = styled.View`
     flex-direction: column;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
   `;
 
   const Content = styled(RNBounceable)`
