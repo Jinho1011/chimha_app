@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { Dimensions, Linking, FlatList, ActivityIndicator } from "react-native";
+import React from "react";
+import { Linking, FlatList, ActivityIndicator } from "react-native";
 import { useTheme } from "@react-navigation/native";
-import { useQuery, useQueries, UseQueryResult } from "react-query";
+import { useQuery, useQueries } from "react-query";
 import styled from "styled-components/native";
 /**
  * ? Local Imports
@@ -14,9 +14,6 @@ import {
 } from "../../services/api/twitch";
 import Header from "./components/Header";
 import Content from "./components/Content";
-import { Title, Subtitle, Text, Subtext } from "../../shared/components/styled";
-import { TwitchSvg } from "../../shared/components/svg/svg";
-import { IsLive, Channel, Followers, Stream } from "@shared-interfaces/twitch";
 import { BDRZ } from "./mock";
 
 const TwitchScreen = () => {
