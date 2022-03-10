@@ -1,20 +1,13 @@
 import React from "react";
-import { View, Dimensions } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import styled from "styled-components/native";
-import { useQuery, useQueries, UseQueryResult } from "react-query";
+import { UseQueryResult } from "react-query";
 
 /**
  * ? Local Imports
  */
-import {
-  Title,
-  Subtitle,
-  Text,
-  Subtext,
-} from "../../../shared/components/styled";
-import { IsLive, Channel, Followers, Stream } from "@shared-interfaces/twitch";
-import { TwitchSvg } from "../../../shared/components/svg/svg";
+import { Text, Subtext } from "../../../shared/components/styled";
+import { Channel } from "@shared-interfaces/twitch";
 import { BDRZ } from "../mock";
 
 const Bdrz = styled.Pressable`
