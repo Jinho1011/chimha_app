@@ -12,8 +12,11 @@
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/stack": "^6.0.11",
     "axios": "^0.24.0",
+    "buffer": "^6.0.3",
     "cheerio": "^1.0.0-rc.10",
+    "cross-fetch": "^3.1.5",
     "events": "^3.3.0",
+    "iconv-lite": "^0.6.3",
     "react": "17.0.2",
     "react-native": "0.66.4",
     "react-native-dynamic-vector-icons": "^1.1.6",
@@ -31,6 +34,7 @@
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
     "redux-logger": "^3.0.6",
+    "rn-fetch-blob": "^0.12.0",
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
@@ -41,6 +45,7 @@
     "@react-native-community/eslint-config": "^3.0.1",
     "@testing-library/jest-native": "^4.0.4",
     "@testing-library/react-native": "^9.0.0",
+    "@types/base-64": "^1.0.0",
     "@types/jest": "^27.4.1",
     "@types/react-native": "^0.66.12",
     "@types/react-test-renderer": "^17.0.1",
