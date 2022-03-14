@@ -99,11 +99,7 @@ const Navigation = () => {
     return (
       <Tab.Navigator
         screenOptions={({ route }) => ({
-          headerShown: true,
-          headerTitle: () => renderHeader(),
-          headerStyle: {
-            backgroundColor: isDarkMode ? palette.black : palette.white,
-          },
+          headerShown: false,
           tabBarIcon: ({ focused, color, size }) =>
             renderTabIcon(route, focused, color, size),
           tabBarShowLabel: false,
@@ -139,7 +135,18 @@ const Navigation = () => {
       }}
       theme={isDarkMode ? DarkTheme : LightTheme}
     >
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: true,
+          headerTitle: () => renderHeader(),
+          headerTitleStyle: {
+            color: isDarkMode ? palette.white : palette.black,
+          },
+          headerStyle: {
+            backgroundColor: isDarkMode ? palette.black : palette.white,
+          },
+        }}
+      >
         <Stack.Screen name="Tabs" component={renderTabNavigation} />
       </Stack.Navigator>
     </NavigationContainer>
