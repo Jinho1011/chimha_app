@@ -11,6 +11,8 @@ import { Article } from "@shared-interfaces/cafe";
 
 interface IContent {
   post: Article;
+  scrollToLastPosition: Function;
+  setLoading: any;
 }
 
 const openUrl = async (appUrl: string, webUrl: string) => {
@@ -28,7 +30,7 @@ const getArticleId = (url: string) => {
   return url.split("articleid=")[1].split("&")[0];
 };
 
-const Content = ({ post }: IContent) => {
+const Content = ({ post, scrollToLastPosition, setLoading }: IContent) => {
   const theme = useTheme();
   const { colors } = theme;
 

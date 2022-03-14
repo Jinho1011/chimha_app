@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Linking, ScrollView, FlatList, ActivityIndicator } from "react-native";
+import React, { useState, useRef, useEffect, useCallback } from "react";
+import { Linking, ScrollView, AppState, ActivityIndicator } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { useQuery, useQueries, useInfiniteQuery } from "react-query";
@@ -70,6 +70,23 @@ const CafeScreen = () => {
     scrollPositionRef.current = 0;
   }, [category]);
 
+  const scrollToLastPosition = () => {
+    scrollViewRef.current.scrollTo({
+      x: 0,
+      y: scrollPositionRef.current,
+      animated: false,
+    });
+  };
+
+  useEffect(() => {
+    if (scrollViewRef.current != null) {
+      console.log("reload");
+      setLoading(true);
+      scrollToLastPosition();
+      setLoading(false);
+    }
+  }, []);
+
   return (
     <Container>
       {!profile.isLoading && posts.every((item) => !item.isLoading) ? (
@@ -99,12 +116,7 @@ const CafeScreen = () => {
                 }
               }}
               onContentSizeChange={() => {
-                if (scrollViewRef.current != null)
-                  scrollViewRef.current.scrollTo({
-                    x: 0,
-                    y: scrollPositionRef.current,
-                    animated: false,
-                  });
+                if (scrollViewRef.current != null) scrollToLastPosition();
               }}
             >
               {posts[category].data?.pages
@@ -116,6 +128,8 @@ const CafeScreen = () => {
                   return (
                     <Content
                       post={item}
+                      scrollToLastPosition={scrollToLastPosition}
+                      setLoading={setLoading}
                       key={item.title + item.author + index}
                     />
                   );

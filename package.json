@@ -21,6 +21,7 @@
     "react-native": "0.66.4",
     "react-native-dynamic-vector-icons": "^1.1.6",
     "react-native-gesture-handler": "^2.1.1",
+    "react-native-inappbrowser-reborn": "^3.6.3",
     "react-native-localization": "^2.1.7",
     "react-native-reanimated": "^2.2.4",
     "react-native-safe-area-context": "^3.3.2",
