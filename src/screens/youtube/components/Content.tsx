@@ -49,8 +49,8 @@ const Content = ({ item, openUrl }: IContent) => {
     <Box
       onPress={() =>
         openUrl(
-          "vnd.youtube://playlist/list/",
-          "https://www.youtube.com/playlist?list=",
+          "youtube://www.youtube.com/playlist?list=",
+          "https://m.youtube.com/playlist?list=",
           item.url,
         )
       }

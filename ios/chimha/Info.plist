@@ -105,6 +105,7 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>vnd.youtube</string>
+		<string>youtube</string>
 		<string>twitch</string>
 		<string>fb455753897775430</string>
 		<string>navercafe</string>
