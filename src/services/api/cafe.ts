@@ -31,7 +31,7 @@ export const getProfile = async (): Promise<Profile> => {
     name: $(".cafe_name").text(),
     thumbnail: $(".mcafe_icon > img").attr("src"),
     members: $(
-      "#main-area > div > table > tbody > tr:nth-child(15) > td > span:nth-child(1)",
+      "#main-area > div > table > tbody > tr:nth-child(16) > td > span:nth-child(1)",
     ).text(),
   };
 

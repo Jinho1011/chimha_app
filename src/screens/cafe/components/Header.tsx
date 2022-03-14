@@ -1,5 +1,5 @@
 import React from "react";
-import { View, FlatList, ScrollView } from "react-native";
+import { View, useColorScheme } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import styled from "styled-components/native";
 /**
@@ -25,6 +25,44 @@ interface IHeader {
   openUrl: Function;
   MENU_IDS: Menu[];
 }
+
+interface ICategory {
+  category: number;
+  setCategory: any;
+  colors: any;
+  MENU_IDS: Menu[];
+  id: number;
+}
+
+const CategoryContent = ({
+  setCategory,
+  category,
+  colors,
+  MENU_IDS,
+  id,
+}: any) => {
+  const scheme = useColorScheme();
+  const isDarkMode = scheme === "dark";
+
+  const Category = styled.Pressable`
+    padding: 10px;
+    background-color: ${isDarkMode ? colors.content : "#f5f5f5"};
+    border-radius: 20px;
+    margin-right: 10px;
+  `;
+
+  return (
+    <Category
+      onPress={() => {
+        setCategory(id);
+      }}
+    >
+      <Subtitle color={id === category ? colors.text : colors.subtitle}>
+        {MENU_IDS[id].category}
+      </Subtitle>
+    </Category>
+  );
+};
 
 const Header = ({
   category,
@@ -52,9 +90,9 @@ const Header = ({
   `;
 
   const Profile = styled.View`
-    background: #ffffff;
-    width: 150px;
-    height: 150px;
+    background: ${colors.background};
+    width: 160px;
+    height: 160px;
     justify-content: center;
     align-items: center;
     border-radius: 150px;
@@ -67,20 +105,14 @@ const Header = ({
     margin-bottom: 4px;
   `;
 
-  const CategoryContainer = styled.ScrollView`
-    margin-bottom: 10px;
-    flex: 1;
-  `;
-
-  const Category = styled.Pressable`
-    padding: 10px;
-    background-color: #f5f5f5;
-    border-radius: 20px;
-    margin-right: 10px;
+  const CategoryContainer = styled.View`
+    margin-bottom: 6px;
+    flex-direction: row;
+    justify-content: space-between;
   `;
 
   return (
-    <View style={{ marginBottom: 20 }}>
+    <View style={{ marginBottom: 10 }}>
       <TitleContainer>
         <Title color={colors.text} style={{ marginRight: 8 }}>
           Community
@@ -98,11 +130,58 @@ const Header = ({
         <Profile>
           <ProfileImage source={{ uri: profile?.thumbnail }} />
           <Text color={colors.text}>{profile?.name}</Text>
-          <Subtext color={colors.subtitle}>{profile?.members}</Subtext>
+          <Subtitle color={colors.text}>{profile?.members}</Subtitle>
         </Profile>
       </ProfileContainer>
 
-      <FlatList
+      <CategoryContainer>
+        <CategoryContent
+          setCategory={setCategory}
+          category={category}
+          colors={colors}
+          MENU_IDS={MENU_IDS}
+          id={0}
+        />
+        <CategoryContent
+          setCategory={setCategory}
+          category={category}
+          colors={colors}
+          MENU_IDS={MENU_IDS}
+          id={1}
+        />
+        <CategoryContent
+          setCategory={setCategory}
+          category={category}
+          colors={colors}
+          MENU_IDS={MENU_IDS}
+          id={2}
+        />
+      </CategoryContainer>
+      <CategoryContainer>
+        <CategoryContent
+          setCategory={setCategory}
+          category={category}
+          colors={colors}
+          MENU_IDS={MENU_IDS}
+          id={3}
+        />
+        <CategoryContent
+          setCategory={setCategory}
+          category={category}
+          colors={colors}
+          MENU_IDS={MENU_IDS}
+          id={4}
+        />
+        <CategoryContent
+          setCategory={setCategory}
+          category={category}
+          colors={colors}
+          MENU_IDS={MENU_IDS}
+          id={5}
+        />
+      </CategoryContainer>
+
+      {/* <FlatList
         data={MENU_IDS}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -120,7 +199,7 @@ const Header = ({
             </Category>
           );
         }}
-      />
+      /> */}
     </View>
   );
 };

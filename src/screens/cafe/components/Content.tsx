@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { Dimensions, Linking } from "react-native";
+import { useColorScheme, Linking } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import styled from "styled-components/native";
 /**
@@ -33,7 +33,9 @@ const getArticleId = (url: string) => {
 
 const Content = ({ post, scrollToLastPosition, setLoading }: IContent) => {
   const theme = useTheme();
+  const scheme = useColorScheme();
   const { colors } = theme;
+  const isDarkMode = scheme === "dark";
 
   const [url, setUrl] = useState("https://reactnative.dev");
   const [statusBarStyle] = useState("dark-content");
@@ -46,9 +48,10 @@ const Content = ({ post, scrollToLastPosition, setLoading }: IContent) => {
   );
 
   const PostContainer = styled.Pressable`
-    margin-bottom: 6px;
+    margin-bottom: 10px;
+    padding-bottom: 4px;
     border-bottom-width: 1px;
-    border-bottom-color: #ececec;
+    border-bottom-color: ${isDarkMode ? colors.dynamicBackground : "#eeeeee"};
   `;
 
   const PostTextContainer = styled.View`
@@ -59,13 +62,7 @@ const Content = ({ post, scrollToLastPosition, setLoading }: IContent) => {
   return (
     <PostContainer
       onPress={async () => {
-        // const articleId = getArticleId(post.link);
         await onOpenLink(post.link);
-        // await openUrl(
-        //   // `navercafe://read?cafeUrl=zilioner&articleId=${articleId}`,
-        //   post.link,
-        //   post.link,
-        // );
       }}
     >
       <PostTextContainer>

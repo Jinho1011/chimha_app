@@ -1,5 +1,10 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { Linking, ScrollView, AppState, ActivityIndicator } from "react-native";
+import {
+  Linking,
+  ScrollView,
+  RefreshControl,
+  ActivityIndicator,
+} from "react-native";
 import { useTheme } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { useQuery, useQueries, useInfiniteQuery } from "react-query";
@@ -70,6 +75,8 @@ const CafeScreen = () => {
     scrollPositionRef.current = 0;
   }, [category]);
 
+  const [refreshing, setRefreshing] = useState(false);
+
   const scrollToLastPosition = () => {
     scrollViewRef.current.scrollTo({
       x: 0,
@@ -78,13 +85,10 @@ const CafeScreen = () => {
     });
   };
 
-  useEffect(() => {
-    if (scrollViewRef.current != null) {
-      console.log("reload");
-      setLoading(true);
-      scrollToLastPosition();
-      setLoading(false);
-    }
+  const onRefresh = React.useCallback(async () => {
+    setRefreshing(true);
+    await posts[category].refetch();
+    setRefreshing(false);
   }, []);
 
   return (
@@ -118,6 +122,9 @@ const CafeScreen = () => {
               onContentSizeChange={() => {
                 if (scrollViewRef.current != null) scrollToLastPosition();
               }}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
             >
               {posts[category].data?.pages
                 .map((page) => {
