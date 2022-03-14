@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "shifaaz-shamoon-unsplash.jpg",
+      "filename" : "splash.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "shifaaz-shamoon-unsplash@2x.jpg",
+      "filename" : "splash@2x.jpg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "shifaaz-shamoon-unsplash@3x.jpg",
+      "filename" : "splash@3x.jpg",
       "idiom" : "universal",
       "scale" : "3x"
     }
