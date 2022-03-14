@@ -20,10 +20,10 @@
 - [x] Fix Logo disappeared
 - [x] Add App icon
 ### Youtube
-- [ ] Fix OpenUrl not working in youtue screen
+- [ ] Fix OpenUrl not working in youtue screen when testing on the real device
 ### Cafe
-- [ ] Fix screen color inverted when switch app 
-- [ ] Fix OpenUrl not working in cafe screen
+- [ ] Fix screen color inverted when switch app when testing on the real device
+- [ ] Fix OpenUrl not working in cafe screen when testing on the real device
 - [ ] Add ActivityIndicator when loading cafe screen
 ### Store
 - [ ] Implements Store screen
