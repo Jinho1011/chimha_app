@@ -14,5 +14,17 @@
   <img src="https://img.shields.io/badge/Redux-4.1.2-764ABC?style=flat&logo=Redux" />
   <img src="https://img.shields.io/badge/axios-0.24.0-EF4678?style=flat&logo=" />
   <img src="https://img.shields.io/badge/React_Query-3.34.16-4B32C3?style=flat&logo=eslint" />
+
+## To-dos
+### Common
+- [ ] Fix Logo disappeared
+### Youtube
+- [ ] Fix OpenUrl not working in youtue screen
+### Cafe
+- [ ] Fix screen color inverted when switch app 
+- [ ] Fix OpenUrl not working in cafe screen
+- [ ] Add ActivityIndicator when loading cafe screen
+### Store
+- [ ] Implements Store screen
   
 </div>
