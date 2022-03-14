@@ -17,7 +17,8 @@
 
 ## To-dos
 ### Common
-- [ ] Fix Logo disappeared
+- [x] Fix Logo disappeared
+- [x] Add App icon
 ### Youtube
 - [ ] Fix OpenUrl not working in youtue screen
 ### Cafe
