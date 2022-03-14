@@ -60,8 +60,11 @@ const Content = ({ item }: IContent) => {
         elevation: 5,
       }}
       onPress={() =>
+        // ${item.titleId}
+        // webtoon/${item.titleId}
+        // webtoon/list?titleId=${item.titleId}
         openUrl(
-          `fb455753897775430://`,
+          `https://apps.comic.naver.com/launchApp/contentList?version=2&titleId=${item.titleId}&league=WEBTOON`,
           `https://m.comic.naver.com/webtoon/list?titleId=${item.titleId}`,
         )
       }

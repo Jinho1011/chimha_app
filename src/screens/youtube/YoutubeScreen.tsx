@@ -35,6 +35,7 @@ const YoutubeScreen = () => {
   const openUrl = async (appUrl: string, webUrl: string, id: string) => {
     const isValid = await Linking.canOpenURL(appUrl + id);
     const baseUrl = isValid ? appUrl + id : webUrl + id;
+    console.log(isValid, appUrl + id);
 
     try {
       await Linking.openURL(baseUrl);

@@ -63,7 +63,6 @@ const CafeScreen = () => {
   };
 
   const scrollViewRef = useRef<ScrollView>(null);
-  const flatListRef = useRef<FlatList<Article>>(null);
   const scrollPositionRef = useRef(0);
   const [loading, setLoading] = useState(false);
 
@@ -73,77 +72,60 @@ const CafeScreen = () => {
 
   return (
     <Container>
-      <Header
-        category={category}
-        setCategory={setCategory}
-        profile={profile.data}
-        MENU_IDS={MENU_IDS}
-        openUrl={openUrl}
-      />
-      {loading ? (
-        <ActivityIndicator />
+      {!profile.isLoading && posts.every((item) => !item.isLoading) ? (
+        <>
+          <Header
+            category={category}
+            setCategory={setCategory}
+            profile={profile.data}
+            MENU_IDS={MENU_IDS}
+            openUrl={openUrl}
+          />
+          {loading ? (
+            <ActivityIndicator />
+          ) : (
+            <ScrollView
+              ref={scrollViewRef}
+              maintainVisibleContentPosition={{
+                minIndexForVisible: 0,
+              }}
+              scrollEventThrottle={0}
+              onScroll={async ({ nativeEvent }) => {
+                scrollPositionRef.current = nativeEvent.contentOffset.y;
+                if (isCloseToBottom(nativeEvent)) {
+                  setLoading(true);
+                  await posts[category].fetchNextPage();
+                  setLoading(false);
+                }
+              }}
+              onContentSizeChange={() => {
+                if (scrollViewRef.current != null)
+                  scrollViewRef.current.scrollTo({
+                    x: 0,
+                    y: scrollPositionRef.current,
+                    animated: false,
+                  });
+              }}
+            >
+              {posts[category].data?.pages
+                .map((page) => {
+                  return page.result;
+                })
+                .flat()
+                .map((item, index) => {
+                  return (
+                    <Content
+                      post={item}
+                      key={item.title + item.author + index}
+                    />
+                  );
+                })}
+            </ScrollView>
+          )}
+        </>
       ) : (
-        <ScrollView
-          ref={scrollViewRef}
-          maintainVisibleContentPosition={{
-            minIndexForVisible: 0,
-          }}
-          scrollEventThrottle={0}
-          onScroll={async ({ nativeEvent }) => {
-            scrollPositionRef.current = nativeEvent.contentOffset.y;
-            if (isCloseToBottom(nativeEvent)) {
-              setLoading(true);
-              const res = await posts[category].fetchNextPage();
-              setLoading(false);
-              // scrollViewRef.current?.scrollToEnd();
-              // scrollViewRef.current.scrollTo({
-              //   x: 0,
-              //   y: scrollPositionRef.current,
-              //   animated: true,
-              // });
-            }
-          }}
-          onContentSizeChange={() => {
-            if (scrollViewRef.current != null)
-              scrollViewRef.current.scrollTo({
-                x: 0,
-                y: scrollPositionRef.current,
-                animated: false,
-              });
-          }}
-        >
-          {posts[category].data?.pages
-            .map((page) => {
-              return page.result;
-            })
-            .flat()
-            .map((item, index) => {
-              return (
-                <Content post={item} key={item.title + item.author + index} />
-              );
-            })}
-        </ScrollView>
+        <ActivityIndicator />
       )}
-
-      {/* <FlatList
-        ref={flatListRef}
-        data={posts[category].data?.pages
-          .map((page) => {
-            return page.result;
-          })
-          .flat()}
-        renderItem={({ item }) => <Content post={item} />}
-        onEndReachedThreshold={0}
-        onEndReached={() => {
-          posts[category].fetchNextPage();
-        }}
-        onScroll={(event) =>
-          (scrollPositionRef.current = event.nativeEvent.contentOffset.y)
-        }
-        onViewableItemsChanged={() => {
-          flatListRef.current.scrollToEnd();
-        }}
-      /> */}
     </Container>
   );
 };

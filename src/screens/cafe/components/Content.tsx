@@ -45,14 +45,14 @@ const Content = ({ post }: IContent) => {
 
   return (
     <PostContainer
-      onPress={() =>
-        openUrl(
-          `navercafe://cafe?cafeUrl=zilioner&articleId=${getArticleId(
-            post.link,
-          )}`,
+      onPress={async () => {
+        const articleId = getArticleId(post.link);
+        await openUrl(
+          // `navercafe://read?cafeUrl=zilioner&articleId=${articleId}`,
           post.link,
-        )
-      }
+          post.link,
+        );
+      }}
     >
       <PostTextContainer>
         <Text color={colors.text} style={{ fontSize: 14 }}>

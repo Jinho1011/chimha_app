@@ -118,8 +118,8 @@ const Header = ({ youtube, openUrl }: IHeader) => {
                 key={item.data.items[0].id}
                 onPress={() => {
                   openUrl(
-                    "vnd.youtube://user/channel/",
-                    "https://www.youtube.com/channel/",
+                    "vnd.youtube://channel/",
+                    "https://m.youtube.com/channel/",
                     item.data.items[0].id,
                   );
                 }}
