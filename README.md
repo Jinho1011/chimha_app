@@ -26,6 +26,6 @@
 - [x] Fix OpenUrl not working in cafe screen when testing on the real device
 - [x] Add ActivityIndicator when loading cafe screen
 ### Store
-- [ ] Implements Store screen
+- [x] Implements Store screen
   
 </div>
