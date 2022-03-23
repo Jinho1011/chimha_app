@@ -1,6 +1,7 @@
 # Chimha
 
 침투부월드 - CHIMHA
+[Download from App store](https://apps.apple.com/kr/app/chimha/id1614281278)
 
 ![](https://user-images.githubusercontent.com/26860466/156980255-7f4c6ebc-803b-4a78-9131-00fa098dc6a7.png)
 
