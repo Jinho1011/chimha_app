@@ -1,8 +1,7 @@
 import { useTheme } from "@react-navigation/native";
-import { Channel } from "@shared-interfaces/twitch";
 import React from "react";
 import { ActivityIndicator, FlatList, Linking } from "react-native";
-import { useQueries, useQuery, UseQueryResult } from "react-query";
+import { useQueries, useQuery } from "react-query";
 import styled from "styled-components/native";
 /**
  * ? Local Imports
@@ -47,13 +46,6 @@ const TwitchScreen = () => {
     }),
   );
 
-  const Container = styled.View`
-    padding: 20px 20px 0 20px;
-    flex: 1;
-    flex-direction: column;
-    background-color: ${colors.background};
-  `;
-
   const openUrl = async (appUrl: string, webUrl: string) => {
     const isValid = await Linking.canOpenURL(appUrl);
     const baseUrl = isValid ? appUrl : webUrl;
@@ -66,7 +58,7 @@ const TwitchScreen = () => {
   };
 
   return (
-    <Container>
+    <Container color={colors.background}>
       {bdrzs.every((e) => !e.isLoading) &&
       !IsLiveLoading &&
       !IsChannelLoading &&
@@ -107,3 +99,10 @@ const TwitchScreen = () => {
 };
 
 export default TwitchScreen;
+
+const Container = styled.View<{ color?: string }>`
+  padding: 20px 20px 0 20px;
+  flex: 1;
+  flex-direction: column;
+  background-color: ${(props) => props.color};
+`;
