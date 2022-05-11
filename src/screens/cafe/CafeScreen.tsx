@@ -78,11 +78,13 @@ const CafeScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const scrollToLastPosition = () => {
-    scrollViewRef.current.scrollTo({
-      x: 0,
-      y: scrollPositionRef.current,
-      animated: false,
-    });
+    if (scrollViewRef.current != null) {
+      scrollViewRef.current.scrollTo({
+        x: 0,
+        y: scrollPositionRef.current,
+        animated: false,
+      });
+    }
   };
 
   const onRefresh = React.useCallback(async () => {

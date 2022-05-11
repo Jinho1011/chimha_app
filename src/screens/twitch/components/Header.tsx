@@ -16,10 +16,10 @@ import { TwitchSvg } from "../../../shared/components/svg/svg";
 
 interface IHeader {
   openUrl: Function;
-  LiveData: IsLive;
-  ChannelData: Channel;
-  FollowData: Followers;
-  StreamData: Stream;
+  LiveData: IsLive | undefined;
+  ChannelData: Channel | undefined;
+  FollowData: Followers | undefined;
+  StreamData: Stream | undefined;
 }
 
 const screenWidth = Dimensions.get("screen").width;

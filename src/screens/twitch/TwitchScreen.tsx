@@ -1,19 +1,20 @@
-import React from "react";
-import { Linking, FlatList, ActivityIndicator } from "react-native";
 import { useTheme } from "@react-navigation/native";
-import { useQuery, useQueries } from "react-query";
+import { Channel } from "@shared-interfaces/twitch";
+import React from "react";
+import { ActivityIndicator, FlatList, Linking } from "react-native";
+import { useQueries, useQuery, UseQueryResult } from "react-query";
 import styled from "styled-components/native";
 /**
  * ? Local Imports
  */
 import {
-  getIsLive,
   getChannelInfo,
   getFollowers,
+  getIsLive,
   getStream,
 } from "../../services/api/twitch";
-import Header from "./components/Header";
 import Content from "./components/Content";
+import Header from "./components/Header";
 import { BDRZ } from "./mock";
 
 const TwitchScreen = () => {
@@ -74,7 +75,11 @@ const TwitchScreen = () => {
         <FlatList
           nestedScrollEnabled
           data={bdrzs}
-          keyExtractor={(item) => item?.data?.data[0].id}
+          keyExtractor={(item) => {
+            if (item?.data?.data[0]?.id !== undefined)
+              return item.data.data[0].id;
+            else return "KEY";
+          }}
           numColumns={4}
           renderItem={({ item }) => <Content value={item} openUrl={openUrl} />}
           ListHeaderComponent={() => (
