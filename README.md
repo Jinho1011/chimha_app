@@ -1,6 +1,7 @@
 # Chimha
 
 침투부월드 - CHIMHA
+[Download from App store](https://apps.apple.com/kr/app/chimha/id1614281278)
 
 ![](https://user-images.githubusercontent.com/26860466/156980255-7f4c6ebc-803b-4a78-9131-00fa098dc6a7.png)
 
@@ -16,16 +17,7 @@
   <img src="https://img.shields.io/badge/React_Query-3.34.16-4B32C3?style=flat&logo=eslint" />
 
 ## To-dos
-### Common
-- [x] Fix Logo disappeared
-- [x] Add App icon
-### Youtube
-- [x] Fix OpenUrl not working in youtue screen when testing on the real device
-### Cafe
-- [ ] Fix screen color inverted when switch app when testing on the real device
-- [x] Fix OpenUrl not working in cafe screen when testing on the real device
-- [x] Add ActivityIndicator when loading cafe screen
-### Store
-- [ ] Implements Store screen
+- [ ] Youtube 화면 Subcontents 클릭 시 해당 유튜브 채널로 이동
+- [ ] Cafe 화면 게시글 썸네일 추가
   
 </div>
