@@ -1,17 +1,13 @@
 import { useTheme } from "@react-navigation/native";
+import { twitchApi, useTwitchApi } from "@services/api/twitch";
 import React from "react";
-import { ActivityIndicator, FlatList, Linking } from "react-native";
+import { ActivityIndicator, FlatList } from "react-native";
 import { useQueries, useQuery } from "react-query";
+import { openUrl } from "shared/libs/openUrl";
 import styled from "styled-components/native";
 /**
  * ? Local Imports
  */
-import {
-  getChannelInfo,
-  getFollowers,
-  getIsLive,
-  getStream,
-} from "../../services/api/twitch";
 import Content from "./components/Content";
 import Header from "./components/Header";
 import { BDRZ } from "./mock";
@@ -20,80 +16,72 @@ const TwitchScreen = () => {
   const theme = useTheme();
   const { colors } = theme;
 
-  const { data: LiveData, isLoading: IsLiveLoading } = useQuery(
-    "isLive",
-    getIsLive,
-  );
-  const { data: ChannelData, isLoading: IsChannelLoading } = useQuery(
-    "channel",
-    () => getChannelInfo("66375105"),
-  );
-  const { data: FollowData, isLoading: IsFollowLoading } = useQuery(
-    "followers",
-    () => getFollowers("66375105"),
-  );
-  const { data: StreamData, isLoading: IsStreamLoading } = useQuery(
-    "stream",
-    () => getStream("66375105"),
-  );
-
-  const bdrzs = useQueries(
+  const isLiveQuery = useTwitchApi.useIsLiveQuery();
+  const channelQuery = useTwitchApi.useChannelQuery("66375105");
+  const followersQuery = useTwitchApi.useFollowersQuery("66375105");
+  const streamQuery = useTwitchApi.useStreamQuery("66375105");
+  const bdrzsQuery = useQueries(
     BDRZ.map((value, index) => {
       return {
         queryKey: ["bdrz", index],
-        queryFn: () => getChannelInfo(value.id),
+        queryFn: () => twitchApi.channel(value.id),
       };
     }),
   );
 
-  const openUrl = async (appUrl: string, webUrl: string) => {
-    const isValid = await Linking.canOpenURL(appUrl);
-    const baseUrl = isValid ? appUrl : webUrl;
+  const isLiveLoading = isLiveQuery.isLoading || isLiveQuery.isIdle;
+  const channelLoading = channelQuery.isLoading || channelQuery.isIdle;
+  const followerLoading = followersQuery.isLoading || followersQuery.isIdle;
+  const streamLoading = streamQuery.isLoading || streamQuery.isIdle;
+  const bdrzsLoading = !bdrzsQuery.every((e) => !e.isLoading);
 
-    try {
-      await Linking.openURL(baseUrl);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  if (
+    isLiveLoading ||
+    channelLoading ||
+    followerLoading ||
+    streamLoading ||
+    bdrzsLoading
+  ) {
+    return <ActivityIndicator />;
+  }
+
+  if (
+    isLiveQuery.isError ||
+    channelQuery.isError ||
+    followersQuery.isError ||
+    streamQuery.isError ||
+    bdrzsQuery.find((e) => e.isError)
+  ) {
+    return <ActivityIndicator />;
+  }
 
   return (
     <Container color={colors.background}>
-      {bdrzs.every((e) => !e.isLoading) &&
-      !IsLiveLoading &&
-      !IsChannelLoading &&
-      !IsFollowLoading &&
-      !IsStreamLoading ? (
-        <FlatList
-          nestedScrollEnabled
-          data={bdrzs}
-          keyExtractor={(item) => {
-            if (item?.data?.data[0]?.id !== undefined)
-              return item.data.data[0].id;
-            else return "KEY";
-          }}
-          numColumns={4}
-          renderItem={({ item }) => <Content value={item} openUrl={openUrl} />}
-          ListHeaderComponent={() => (
-            <Header
-              openUrl={openUrl}
-              LiveData={LiveData}
-              ChannelData={ChannelData}
-              FollowData={FollowData}
-              StreamData={StreamData}
-            />
-          )}
-          columnWrapperStyle={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginBottom: 20,
-          }}
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-        />
-      ) : (
-        <ActivityIndicator />
-      )}
+      <FlatList
+        nestedScrollEnabled
+        data={bdrzsQuery}
+        keyExtractor={(item) => {
+          return item?.data?.data[0].id ?? item.status;
+        }}
+        numColumns={4}
+        renderItem={({ item }) => <Content value={item} openUrl={openUrl} />}
+        ListHeaderComponent={() => (
+          <Header
+            openUrl={openUrl}
+            LiveData={isLiveQuery.data}
+            ChannelData={channelQuery.data}
+            FollowData={followersQuery.data}
+            StreamData={streamQuery.data}
+          />
+        )}
+        columnWrapperStyle={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginBottom: 20,
+        }}
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+      />
     </Container>
   );
 };
