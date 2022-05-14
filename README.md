@@ -16,8 +16,9 @@
   <img src="https://img.shields.io/badge/axios-0.24.0-EF4678?style=flat&logo=" />
   <img src="https://img.shields.io/badge/React_Query-3.34.16-4B32C3?style=flat&logo=eslint" />
 
-## To-dos
+## Todos
 - [ ] Youtube 화면 Subcontents 클릭 시 해당 유튜브 채널로 이동
+- [ ] Fix Twitch Screen
 - [ ] Cafe 화면 게시글 썸네일 추가
   
 </div>
