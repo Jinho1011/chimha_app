@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import styled from "styled-components/native";
-import { useQuery, useQueries, useInfiniteQuery } from "react-query";
+import { useQuery, useInfiniteQuery } from "react-query";
 /**
  * ? Local Imports
  */
@@ -15,7 +15,6 @@ import Header from "./components/Header";
 import Content from "./components/Content";
 import { MENU_IDS } from "../../services/api/api.constant";
 import { getProfile, getArticles } from "../../services/api/cafe";
-import { Article } from "@shared-interfaces/cafe";
 
 const openUrl = async (appUrl: string, webUrl: string) => {
   const isValid = await Linking.canOpenURL(appUrl);
@@ -41,7 +40,7 @@ const CafeScreen = () => {
       menu.category,
       ({ pageParam = 1 }) => getArticles(menu.id, pageParam),
       {
-        getNextPageParam: (lastPage, pages) => {
+        getNextPageParam: (lastPage) => {
           return lastPage.page + 1;
         },
       },
@@ -137,8 +136,6 @@ const CafeScreen = () => {
                   return (
                     <Content
                       post={item}
-                      scrollToLastPosition={scrollToLastPosition}
-                      setLoading={setLoading}
                       key={item.title + item.author + index}
                     />
                   );
