@@ -272,9 +272,11 @@ PODS:
   - React-jsinspector (0.66.4)
   - React-logger (0.66.4):
     - glog
-  - react-native-safe-area-context (3.3.2):
+  - react-native-safe-area-context (3.4.1):
     - React-Core
   - react-native-splash-screen (3.3.0):
+    - React-Core
+  - react-native-webview (11.23.0):
     - React-Core
   - React-perflogger (0.66.4)
   - React-RCTActionSheet (0.66.4):
@@ -341,7 +343,7 @@ PODS:
     - React-jsi (= 0.66.4)
     - React-logger (= 0.66.4)
     - React-perflogger (= 0.66.4)
-  - ReactNativeLocalization (2.1.7):
+  - ReactNativeLocalization (2.3.1):
     - React-Core
   - rn-fetch-blob (0.12.0):
     - React-Core
@@ -349,11 +351,11 @@ PODS:
     - React-Core
   - RNCMaskedView (0.1.11):
     - React
-  - RNGestureHandler (2.1.1):
+  - RNGestureHandler (2.5.0):
     - React-Core
-  - RNInAppBrowser (3.6.3):
+  - RNInAppBrowser (3.7.0):
     - React-Core
-  - RNReanimated (2.3.1):
+  - RNReanimated (2.9.1):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -361,7 +363,6 @@ PODS:
     - RCT-Folly
     - RCTRequired
     - RCTTypeSafety
-    - React
     - React-callinvoker
     - React-Core
     - React-Core/DevSupport
@@ -381,12 +382,12 @@ PODS:
     - React-RCTText
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.10.1):
+  - RNScreens (3.15.0):
     - React-Core
     - React-RCTImage
-  - RNSVG (12.1.1):
-    - React
-  - RNVectorIcons (9.0.0):
+  - RNSVG (12.4.3):
+    - React-Core
+  - RNVectorIcons (9.2.0):
     - React-Core
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -435,6 +436,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
+  - react-native-webview (from `../node_modules/react-native-webview`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -515,6 +517,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-splash-screen:
     :path: "../node_modules/react-native-splash-screen"
+  react-native-webview:
+    :path: "../node_modules/react-native-webview"
   React-perflogger:
     :path: "../node_modules/react-native/ReactCommon/reactperflogger"
   React-RCTActionSheet:
@@ -593,8 +597,9 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 94ce921e1d8ce7023366873ec371f3441383b396
   React-jsinspector: d0374f7509d407d2264168b6d0fad0b54e300b85
   React-logger: 933f80c97c633ee8965d609876848148e3fef438
-  react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
+  react-native-safe-area-context: 9e40fb181dac02619414ba1294d6c2a807056ab9
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
+  react-native-webview: e771bc375f789ebfa02a26939a57dbc6fa897336
   React-perflogger: 93075d8931c32cd1fce8a98c15d2d5ccc4d891bd
   React-RCTActionSheet: 7d3041e6761b4f3044a37079ddcb156575fb6d89
   React-RCTAnimation: 743e88b55ac62511ae5c2e22803d4f503f2a3a13
@@ -607,19 +612,19 @@ SPEC CHECKSUMS:
   React-RCTVibration: e3ffca672dd3772536cb844274094b0e2c31b187
   React-runtimeexecutor: dec32ee6f2e2a26e13e58152271535fadff5455a
   ReactCommon: 57b69f6383eafcbd7da625bfa6003810332313c4
-  ReactNativeLocalization: 90a1181b7672309701dd7e5364fbf587319d41c6
+  ReactNativeLocalization: 076497d7ca70341c751cd3b3e7c86187332a182d
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
   RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
-  RNGestureHandler: e1ad51d31a580755079d5124d3ab66f0fcaa8311
-  RNInAppBrowser: 3ff3a3b8f458aaf25aaee879d057352862edf357
-  RNReanimated: da3860204e5660c0dd66739936732197d359d753
-  RNScreens: 522705f2e5c9d27efb17f24aceb2bf8335bc7b8e
-  RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
-  RNVectorIcons: 4143ba35feebab8fdbe6bc43d1e776b393d47ac8
+  RNGestureHandler: bad495418bcbd3ab47017a38d93d290ebd406f50
+  RNInAppBrowser: e36d6935517101ccba0e875bac8ad7b0cb655364
+  RNReanimated: 11e6e30bbc49079b7f0c321ac5830e6d113d0224
+  RNScreens: 4a1af06327774490d97342c00aee0c2bafb497b7
+  RNSVG: f3b60aeeaa81960e2e0536c3a9eef50b667ef3a9
+  RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   Yoga: e7dc4e71caba6472ff48ad7d234389b91dadc280
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
 PODFILE CHECKSUM: 8958d594b3c43a5f9f067204a60d5050df1ad54e
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.3
