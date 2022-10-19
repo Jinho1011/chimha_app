@@ -29,7 +29,7 @@
     "react-native-splash-screen": "^3.3.0",
     "react-native-svg": "^12.1.1",
     "react-native-vector-icons": "^9.0.0",
-    "react-native-webview": "^11.23.0",
+    "react-native-webview": "^11.23.1",
     "react-navigation-helpers": "^2.0.0",
     "react-query": "^3.34.16",
     "react-redux": "^7.2.6",
