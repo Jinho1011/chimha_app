@@ -72,7 +72,7 @@
   },
   "scripts": {
     "android": "npx react-native run-android",
-    "ios": "npx react-native run-ios",
+    "ios": "npx react-native run-ios --simulator='iPhone 14'",
     "start": "react-native start --reset-cache",
     "husky:setup": "npx husky-init && npm run husky:commitlint && npm run husky:prettier",
     "husky:commitlint": "npx husky add .husky/commit-msg 'npx --no-install commitlint --edit'",
